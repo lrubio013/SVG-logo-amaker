@@ -1,7 +1,8 @@
-const inquirer = require("inquirer");
-const { Circle, Triangle, Square } = require("./lib/shapes");
+const inquirer = require("inquirer"); //Downloaded inquirer to be able to retrieve user input
+const { Circle, Triangle, Square } = require("./lib/shapes"); //Called upon my constructors I exported on shapes.js
 const { writeFile } = require("fs").promises
 
+//Creates a series of questions that application will ask the user
 const questions = [
     {
         type: "input",
@@ -29,10 +30,12 @@ const questions = [
     },
 ];
 
+// Created my function that'll create user SVG based on their answers
 function init() {
-    inquirer.prompt(questions)
+    inquirer.prompt(questions) //Asks user the questions we created
         .then((data) => {
             let userSvg; 
+            // Will create an SVG depending on the users answers
             if (data.shape === "Circle") {
                 userSvg = new Circle(data.initials, data.textColor, data.shapeColor);
             }
@@ -43,6 +46,7 @@ function init() {
                 userSvg = new Square(data.initials, data.textColor, data.shapeColor);
             }
             
+            // Turns the new user constructor and makes a file in the lib folder called logo.svg
             if (userSvg) {
             return writeFile("./lib/logo.svg", userSvg.render());
             } else {
@@ -60,5 +64,5 @@ function init() {
 
 
 
-
+// Initialized my function
 init();
